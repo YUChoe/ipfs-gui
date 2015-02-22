@@ -5,14 +5,16 @@ __author__ = 'https://github.com/YUChoe'
 from PySide import QtGui
 from PySide import QtCore
 #import yaml
+import os
 import sys
+import logging
 
 class MainWindow (QtGui.QWidget) :
     def __init__(self):
         super(MainWindow, self).__init__()
         self.codec = QtCore.QTextCodec.codecForName("UTF-8")
         self.UIbuttons = []
-        self.features = ['resume', 'install', 'init', 'add', 'cat', 'ls']
+        self.features = ['resume', 'install', 'init', 'add', 'cat', 'ls', 'quit']
 
         self.initUI()
 
@@ -30,6 +32,8 @@ class MainWindow (QtGui.QWidget) :
         self.setPalette(palette)
 
         self.show()
+        self.activateWindow()
+
 
     def sub_left_initUI(self):
         _x = 2
@@ -52,16 +56,30 @@ class MainWindow (QtGui.QWidget) :
         self.show()
 
     def evnt_clicked(self, bname):
-        #print "do_%s" % bname
+        fname = sys._getframe().f_code.co_name
         def _evnt_clicked():
-            print "do_%s" % bname
-            if 
+            _debug(fname, bname)
+            if bname not in self.features :
+                return False
+            # 'resume', 'install', 'init', 'add', 'cat', 'ls', 'quit']
+            if bname == "resume" :
+                if os.path.isfile("") != True :
+                    pass
+            elif bname == 'quit' :
+                sys.exit()
+
         return _evnt_clicked
 
+# --- EOC ---
+
+def _debug(fname, str) :
+    logging.debug("%s %s" %(fname, str))
+
 def main() :
-  app = QtGui.QApplication(sys.argv)
-  thisapp = MainWindow()
-  sys.exit(app.exec_())
+    logging.basicConfig(stream=sys.stderr, level=logging.DEBUG)
+    app = QtGui.QApplication(sys.argv)
+    thisapp = MainWindow()
+    sys.exit(app.exec_())
 
 if __name__ == "__main__" :
-  main()
+    main()
