@@ -16,6 +16,9 @@ class MainWindow (QtGui.QWidget) :
         self.UIbuttons = []
         self.features = ['resume', 'install', 'init', 'add', 'cat', 'ls', 'quit']
 
+        # TODO: config JSON
+        # self.
+
         self.initUI()
 
     def initUI(self):
@@ -33,9 +36,10 @@ class MainWindow (QtGui.QWidget) :
 
         self.show()
         self.activateWindow()
-
+        # TODO: make this active
 
     def sub_left_initUI(self):
+        fname = sys._getframe().f_code.co_name
         _x = 2
         _y_start_point = 2
         _height = 22
@@ -50,7 +54,7 @@ class MainWindow (QtGui.QWidget) :
             #obtn.clicked.connect(partial(self.evnt_clicked), bname)
             #obtn.clicked.connect(self.evnt_clicked, [bname])
 
-            print self.features.index(bname), str(bname), _x, _y
+            _debug(fname, " ".join([str(self.features.index(bname)), str(bname), str(_x), str(_y)]))
             self.UIbuttons.append(obtn)
             #del obtn
         self.show()
@@ -66,6 +70,7 @@ class MainWindow (QtGui.QWidget) :
                 if os.path.isfile("") != True :
                     pass
             elif bname == 'quit' :
+                _debug(fname, "bye~")
                 sys.exit()
 
         return _evnt_clicked
